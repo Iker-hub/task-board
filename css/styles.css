@@ -10,6 +10,12 @@
   background-color: #ffff33;
 }
 
+#task-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #input-title {
   width: 100%;
 
