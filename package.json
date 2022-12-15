@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "jquery": "^3.6.2",
+    "jquery-ui": "^1.13.2",
+    "jqueryui": "^1.11.1"
+  }
+}
