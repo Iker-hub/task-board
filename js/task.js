@@ -1,76 +1,107 @@
-class Task {
-  init() {
-    this.tasks = null;
+let tasks = new Array();
+$("#add-task").on("click", addTask);
 
-    $("#add-task").on("click", addTask);
-  }
+function addTask() {
+  let task = {
+    id: Math.floor(Math.random() * 999),
+    title: "",
+    content: "",
+  };
+  let taskColor = ["task-blue", "task-pink", "task-yellow"];
+  let title = task.title == "" ? "Task" : task.title;
+  $("#board").append(
+    '<div class="task ' +
+      taskColor[Math.floor(Math.random() * 3)] +
+      '" id="task-' +
+      task.id +
+      '">' +
+      '<div id="task-content">' +
+      '<h3 id="task-title"><u>' +
+      title +
+      "</u><h3/>" +
+      '<p id="task-content">' +
+      task.content +
+      "</p>" +
+      "</div>" +
+      '<button class="btn btn-light" id="edit-task-' +
+      task.id +
+      '">Edit</button>' +
+      "</div>"
+  );
+  $("#task-" + task.id).draggable();
+  $("#edit-task-" + task.id).on("click", { task: task }, editTask);
 
-  addTask() {
-    let task = {
-      id: this.tasks.lenght + 1,
-      title: "Task",
-      content: "",
-    };
+  tasks.push(task);
+}
 
-    $("#board").append(
-      '<div id="task task-' +
-        task.id +
-        '">' +
-        '<div id="task-content">' +
-        '<h3 id="task-title"><u>' +
-        task.title +
-        "</u><h3/>" +
-        '<p id="task-content">' +
-        task.content +
-        "</p>" +
-        "</div>" +
-        '<button id="edit-task">Edit</button>' +
-        "</div>"
-    );
-    $("#task").draggable();
-    $("#edit-task").on("click", editTask(task.id));
-
-    this.tasks.push(task);
-  }
-
-  editTask(id) {
-    $("#task-" + id + "#input-title").val($("#task-title").val());
-    $("#task-content").replaceWith(
+function editTask(e) {
+  let task = e.data.task;
+  $("#task-" + task.id)
+    .find("#task-content")
+    .replaceWith(
       '<div id="task-content">' +
         '<input id="input-title" placeholder="Task title" value="' +
-        $("#task-title").val() +
-        '"required>' +
+        task.title +
+        '" required>' +
         '<textarea id="textarea-content" placeholder="Task content">' +
-        $("#textarea-content").val() +
+        task.content +
         "</textarea>" +
         "</div>"
     );
 
-    $("#edit-task").replaceWith(
-      '<div id="control-edit-buttons">' +
-        '<button id="cancel-edit">Cancel</button>' +
-        '<button id="confirm-edit">Confirm</button></div>'
-    );
-    $("#cancel-edit").on("click", cancelEdit);
-    $("#confirm-edit").on("click", confirmEdit);
-  }
+  $("#edit-task-" + task.id).replaceWith(
+    '<div id="control-edit-buttons">' +
+      '<button class="btn btn-light" id="cancel-edit-' +
+      task.id +
+      '">Cancel</button>' +
+      '<button class="btn btn-light" id="confirm-edit-' +
+      task.id +
+      '">Confirm</button></div>'
+  );
 
-  cancelEdit() {
-    //$("#task").replaceWith("");
-  }
-
-  confirmEdit() {
-    $("#input-title").replaceWith(
-      '<h3 id="task-title"><u>' + $("#input-title").val() + "</u></h3>"
-    );
-    $("#textarea-content").replaceWith(
-      '<p id="task-content">' + $("#textarea-content").val() + "</p>"
-    );
-    $("#control-edit-buttons").replaceWith(
-      '<button id="edit-task">Edit</button>'
-    );
-    $("#edit-task").on("click", editTask);
-  }
+  $("#cancel-edit-" + task.id).on("click", { task: task }, cancelEdit);
+  $("#confirm-edit-" + task.id).on("click", { task: task }, confirmEdit);
 }
 
-export { Task };
+function cancelEdit(e) {
+  let task = e.data.task;
+  let title = task.title == "" ? "Task" : task.title;
+  $("#task-" + task.id)
+    .find("#input-title")
+    .replaceWith('<h3 id="task-title"><u>' + title + "</u></h3>");
+  $("#task-" + task.id)
+    .find("#textarea-content")
+    .replaceWith('<p id="task-content">' + task.content + "</p>");
+  $("#control-edit-buttons").replaceWith(
+    '<button class="btn btn-light" id="edit-task-' + task.id + '">Edit</button>'
+  );
+  $("#edit-task-" + task.id).on("click", { task: task }, editTask);
+}
+
+function confirmEdit(e) {
+  let task = e.data.task;
+  let title = $("#task-" + task.id)
+    .find("#input-title")
+    .val();
+  let content = $("#task-" + task.id)
+    .find("#textarea-content")
+    .val();
+  let newTitle = title == "" ? "Task" : title;
+  $("#task-" + task.id)
+    .find("#input-title")
+    .replaceWith('<h3 id="task-title"><u>' + newTitle + "</u></h3>");
+  $("#task-" + task.id)
+    .find("#textarea-content")
+    .replaceWith('<p id="task-content">' + content + "</p>");
+  $("#control-edit-buttons").replaceWith(
+    '<button class="btn btn-light" id="edit-task-' + task.id + '">Edit</button>'
+  );
+
+  tasks.forEach((tasksElement) => {
+    if (tasksElement.id == task.id) {
+      tasksElement.title = title;
+      tasksElement.content = content;
+      $("#edit-task-" + task.id).on("click", { task: tasksElement }, editTask);
+    }
+  });
+}

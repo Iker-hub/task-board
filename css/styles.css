@@ -1,8 +1,4 @@
-#board {
-  background-color: #474e54;
-}
-
-#task {
+.task {
   width: 300px;
   height: 300px;
 
@@ -11,7 +7,19 @@
   align-items: center;
   padding: 20px;
 
-  background-color: #ffc107;
+  border: 0.5px solid black;
+}
+
+.task-blue {
+  background-color: #7afcff;
+}
+
+.task-pink {
+  background-color: #ff7eb9;
+}
+
+.task-yellow {
+  background-color: #fff740;
 }
 
 #task-content {
@@ -40,4 +48,9 @@
   justify-content: space-between;
 
   margin-top: 20px;
+}
+
+.btn,
+.btn:hover {
+  border: 0.5px solid black;
 }
