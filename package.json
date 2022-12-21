@@ -1,8 +1,30 @@
 {
   "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "jquery": "^3.6.2",
     "jquery-ui": "^1.13.2",
     "jqueryui": "^1.11.1",
+    "mongodb": "^4.13.0",
+    "mongoose": "^6.8.1",
     "uuid": "^9.0.0"
-  }
+  },
+  "name": "task-board",
+  "version": "1.0.0",
+  "description": "task-board API REST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iker-hub/task-board.git"
+  },
+  "author": "Iker-hub",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Iker-hub/task-board/issues"
+  },
+  "homepage": "https://github.com/Iker-hub/task-board#readme"
 }
