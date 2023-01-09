@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 // Connect to DB
 mongoose.connect(
-  "mongodb://admin:admin@localhost:1888/?authMechanism=DEFAULT",
+  "mongodb://admin:admin@localhost:1888/tasksdb?authMechanism=DEFAULT",
   () => {
     console.log("connect to DB!");
   }
